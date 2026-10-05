@@ -105,6 +105,7 @@ struct SettingsView: View {
                     creditsRow(
                         name: "Dan Vip",
                         role: language.text("credit.danvip"),
+                        url: https://www.instagram.com/dant211_vc/
                     )
                 }
             }
