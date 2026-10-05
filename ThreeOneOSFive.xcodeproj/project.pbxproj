@@ -44,6 +44,7 @@
 		3105B220 /* PatchProjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105B120; };
 		3105B221 /* PatchProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105B121; };
 		3105B222 /* PatchProjectEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105B122; };
+		3105K201 /* PatchCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105K101; };
 		3105C200 /* PatchDraftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C100; };
 		3105C201 /* PatchDraftCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C101; };
 		3105C202 /* FolderPatchSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C102; };
@@ -126,6 +127,7 @@
 		3105B120 /* PatchProjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchProjectStore.swift; sourceTree = "<group>"; };
 		3105B121 /* PatchProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchProjectsView.swift; sourceTree = "<group>"; };
 		3105B122 /* PatchProjectEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchProjectEditorView.swift; sourceTree = "<group>"; };
+		3105K101 /* PatchCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchCatalog.swift; sourceTree = "<group>"; };
 		3105C100 /* PatchDraftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDraftService.swift; sourceTree = "<group>"; };
 		3105C101 /* PatchDraftCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDraftCoordinator.swift; sourceTree = "<group>"; };
 		3105C102 /* FolderPatchSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPatchSelectionView.swift; sourceTree = "<group>"; };
@@ -148,8 +150,7 @@
 		3105I100 /* FilesTabControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesTabControls.swift; sourceTree = "<group>"; };
 		3105I101 /* FilesTabSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesTabSwitcherView.swift; sourceTree = "<group>"; };
 		3105A121 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3105A122 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3105B123 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3105A122 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +250,7 @@
 				3105B118 /* DevicePatchService.swift */,
 				3105B119 /* PatchProjectLibrary.swift */,
 				3105B120 /* PatchProjectStore.swift */,
+				3105K101 /* PatchCatalog.swift */,
 				3105G103 /* PatchWorkspaceService.swift */,
 				3105H100 /* AppTabNavigationState.swift */,
 				3105C100 /* PatchDraftService.swift */,
@@ -330,8 +332,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				vi,
-				"zh-Hans",
+				es,
 				Base,
 			);
 			mainGroup = 3105A400;
@@ -389,6 +390,7 @@
 				3105B220,
 				3105B221,
 				3105B222,
+				3105K201,
 				3105C200,
 				3105C201,
 				3105C202,
@@ -419,8 +421,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3105A121 /* en */,
-				3105A122 /* vi */,
-				3105B123 /* zh-Hans */,
+				3105A122 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

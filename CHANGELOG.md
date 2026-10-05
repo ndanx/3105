@@ -2,6 +2,20 @@
 
 All notable user-facing changes are documented in this file.
 
+## [Unreleased] - Fork changes
+
+Modifications to 3105 1.1.1 (GPL-3.0), based on https://github.com/YangJiiii/3105.
+
+### Added
+
+- Remote patch catalog: the Patches tab lists the patches published in `catalog/catalog.json`, each with a "Download patch" button, mixed with the local patches.
+- Spanish localization.
+- GitHub Actions workflow that builds an unsigned IPA.
+
+### Removed
+
+- Vietnamese and Simplified Chinese from the language selector (the strings files remain in the repository but are no longer bundled).
+
 ## [1.0.1] - 2026-08-15
 
 ### Added

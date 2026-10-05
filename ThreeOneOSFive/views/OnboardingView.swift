@@ -104,7 +104,7 @@ struct OnboardingView: View {
                                 Text(option.displayName)
                                     .font(.body.weight(.semibold))
                                     .foregroundStyle(.primary)
-                                Text(option.rawValue == "en" ? "English" : option.rawValue == "vi" ? "Tiếng Việt" : "简体中文")
+                                Text(option.rawValue == "en" ? "English" : "Spanish")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }

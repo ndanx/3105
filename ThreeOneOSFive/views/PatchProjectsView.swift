@@ -15,6 +15,9 @@ struct PatchProjectsView: View {
     @State private var showCreate = false
     @State private var showImporter = false
     @State private var searchText = ""
+    @StateObject private var catalog = PatchCatalogStore()
+    @State private var downloadingID: String?
+    @State private var itemIDsBeforeDownload: Set<UUID> = []
 
     private var filteredItems: [PatchLibraryItem] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -38,6 +41,19 @@ struct PatchProjectsView: View {
         }
     }
 
+    private var pendingCatalog: [PatchCatalogEntry] {
+        catalog.entries.filter { !catalog.isInstalled($0, in: store.items) }
+    }
+
+    private var filteredCatalog: [PatchCatalogEntry] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return pendingCatalog }
+        return pendingCatalog.filter {
+            $0.name.localizedCaseInsensitiveContains(query)
+                || ($0.summary ?? "").localizedCaseInsensitiveContains(query)
+        }
+    }
+
     init() {
 #if targetEnvironment(simulator)
         _showCreate = State(
@@ -56,10 +72,10 @@ struct PatchProjectsView: View {
                 )
                 Divider()
                 List {
-                    if store.items.isEmpty && !store.isBusy {
+                    if store.items.isEmpty && pendingCatalog.isEmpty && !store.isBusy && !catalog.isLoading {
                         emptyState
                             .listRowSeparator(.hidden)
-                    } else if filteredItems.isEmpty && !store.isBusy {
+                    } else if filteredItems.isEmpty && filteredCatalog.isEmpty && !store.isBusy && !catalog.isLoading {
                         searchEmptyState
                             .listRowSeparator(.hidden)
                     } else {
@@ -69,9 +85,16 @@ struct PatchProjectsView: View {
                         .onDelete { offsets in
                             offsets.map { filteredItems[$0] }.forEach(store.delete)
                         }
+                        ForEach(filteredCatalog) { entry in
+                            catalogRow(entry)
+                        }
+                    }
+                    if catalog.loadFailed {
+                        catalogErrorRow
                     }
                 }
                 .listStyle(.insetGrouped)
+                .refreshable { await catalog.load() }
             }
             .navigationTitle(language.text("patch.title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -145,6 +168,17 @@ struct PatchProjectsView: View {
                 )
             }
             .onAppear(perform: consumeExternalImport)
+            .task {
+                if !catalog.hasLoaded { await catalog.load() }
+            }
+            .onChange(of: store.isBusy) { busy in
+                guard !busy, let entryID = downloadingID else { return }
+                downloadingID = nil
+                let added = Set(store.items.map(\.id)).subtracting(itemIDsBeforeDownload)
+                if added.count == 1, let packageID = added.first {
+                    catalog.recordInstall(entryID: entryID, packageID: packageID)
+                }
+            }
             .onChange(of: draftCoordinator.importRequest?.id) { _ in
                 consumeExternalImport()
             }
@@ -155,6 +189,40 @@ struct PatchProjectsView: View {
         guard let request = draftCoordinator.importRequest else { return }
         draftCoordinator.clearImport()
         store.importPackage(from: request.source)
+    }
+
+    private func catalogRow(_ entry: PatchCatalogEntry) -> some View {
+        PatchCatalogRow(
+            entry: entry,
+            language: language,
+            isDownloading: downloadingID == entry.id && store.isBusy,
+            isDisabled: store.isBusy
+        ) {
+            download(entry)
+        }
+    }
+
+    private func download(_ entry: PatchCatalogEntry) {
+        guard !store.isBusy else { return }
+        itemIDsBeforeDownload = Set(store.items.map(\.id))
+        downloadingID = entry.id
+        store.importPackage(from: .remote(entry.url))
+        if !store.isBusy { downloadingID = nil }
+    }
+
+    private var catalogErrorRow: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "exclamationmark.icloud")
+                .foregroundStyle(.secondary)
+            Text(language.text("patch.catalog_load_failed"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Button(language.text("browser.retry")) {
+                Task { await catalog.load() }
+            }
+            .buttonStyle(.borderless)
+        }
     }
 
     @ViewBuilder
@@ -236,6 +304,65 @@ private struct PatchProjectRow: View {
                     .foregroundStyle(.secondary)
                     .accessibilityLabel(language.text("patch.password_protected"))
             }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+private struct PatchCatalogRow: View {
+    let entry: PatchCatalogEntry
+    let language: AppLanguage
+    let isDownloading: Bool
+    let isDisabled: Bool
+    let onDownload: () -> Void
+
+    private var meta: String? {
+        var parts: [String] = []
+        if let version = entry.version, !version.isEmpty {
+            parts.append(language.text("common.version", version))
+        }
+        if let size = entry.size, size > 0 {
+            parts.append(ByteCountFormatter.string(fromByteCount: size, countStyle: .file))
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top, spacing: 12) {
+                AppRowIcon(systemName: "shippingbox.fill")
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(entry.name)
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(.primary)
+                    if let summary = entry.summary, !summary.isEmpty {
+                        Text(summary)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(3)
+                    }
+                    if let meta {
+                        Text(meta)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+            Button(action: onDownload) {
+                HStack(spacing: 8) {
+                    if isDownloading {
+                        ProgressView()
+                    } else {
+                        Image(systemName: "icloud.and.arrow.down")
+                    }
+                    Text(language.text(isDownloading ? "patch.catalog_downloading" : "patch.catalog_download"))
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(AppTheme.accent)
+            .disabled(isDisabled)
         }
         .padding(.vertical, 4)
     }
