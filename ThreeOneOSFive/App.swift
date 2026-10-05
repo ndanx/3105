@@ -7,6 +7,7 @@ struct ThreeOneOSFiveApp: App {
     @StateObject private var patchDraftCoordinator = PatchDraftCoordinator()
     @StateObject private var fileOperationCoordinator = FileOperationCoordinator()
     @AppStorage(AppLanguage.storageKey) private var languageCode = AppLanguage.english.rawValue
+    @AppStorage(AppThemeColor.storageKey) private var themeColorCode = AppThemeColor.orange.rawValue
     @State private var showOnboarding = OnboardingStore.shouldShow()
     @State private var showAttribution = false
     @State private var updateOffer: AppUpdateChecker.Offer?
@@ -55,6 +56,7 @@ struct ThreeOneOSFiveApp: App {
                     .zIndex(1)
                 }
             }
+            .id(themeColorCode)
             .displayIdentityAttribution(isPresented: $showAttribution, enabled: !showOnboarding)
             .sheet(isPresented: $showAttribution) {
                 DisplayAttributionSheet()

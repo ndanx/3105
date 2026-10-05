@@ -5,6 +5,8 @@ struct SettingsView: View {
     @Environment(\.appLanguage) private var language
     @EnvironmentObject private var appState: AppState
     @AppStorage(AppLanguage.storageKey) private var languageCode = AppLanguage.english.rawValue
+    @AppStorage(AppThemeColor.storageKey) private var themeColorCode = AppThemeColor.orange.rawValue
+    @State private var selectedTheme = AppThemeColor.current
 
     var body: some View {
         NavigationStack {
@@ -36,6 +38,32 @@ struct SettingsView: View {
                 Section(language.text("common.device")) {
                     LabeledContent(language.text("dashboard.hardware_model"), value: AppInfo.displayMachineName)
                     LabeledContent(language.text("settings.ios_version"), value: "\(AppInfo.osVersion) (\(AppInfo.osBuild))")
+                    HStack {
+                        Text(language.text("settings.theme"))
+                        Spacer()
+                        HStack(spacing: 14) {
+                            ForEach(AppThemeColor.allCases) { option in
+                                Button {
+                                    selectedTheme = option
+                                } label: {
+                                    Circle()
+                                        .fill(option.color)
+                                        .frame(width: 26, height: 26)
+                                        .overlay(
+                                            Circle()
+                                                .strokeBorder(
+                                                    Color.primary,
+                                                    lineWidth: selectedTheme == option ? 2 : 0
+                                                )
+                                                .padding(-4)
+                                        )
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel(language.text(option.titleKey))
+                                .accessibilityAddTraits(selectedTheme == option ? .isSelected : [])
+                            }
+                        }
+                    }
                 }
 
                 Section {
@@ -69,43 +97,23 @@ struct SettingsView: View {
                         name: "GitHub",
                         role: language.text("social.github_role"),
                         url: "https://github.com/YangJiiii/3105"
-                    )
-                    creditsRow(
-                        name: "Cộng Đồng IOSVN",
-                        role: language.text("social.iosvn_role"),
-                        url: "https://t.me/ioscrackvn"
+
                     )
                 }
 
                 Section(language.text("settings.credits")) {
                     creditsRow(
-                        name: "YangJiii",
-                        role: language.text("credit.yangjiii"),
-                        url: "https://x.com/duongduong0908"
-                    )
-                    creditsRow(
-                        name: "0xjohnnydev",
-                        role: language.text("credit.filzaslop"),
-                        url: "https://github.com/0xjohnnydev/FilzaSlop"
-                    )
-                    creditsRow(
-                        name: "LeminLimez",
-                        role: language.text("credit.pocket_poster"),
-                        url: "https://github.com/leminlimez/Pocket-Poster"
-                    )
-                    creditsRow(
-                        name: "CrazyMind90",
-                        role: language.text("credit.sandbox_escape"),
-                        url: "https://github.com/CrazyMind90"
-                    )
-                    creditsRow(
-                        name: "forcequitOS",
-                        role: language.text("credit.forcequit"),
-                        url: "https://github.com/forcequitOS"
+                        name: "Dan Vip",
+                        role: language.text("credit.danvip"),
                     )
                 }
             }
-            .tint(AppTheme.accent)
+            .tint(selectedTheme.color)
+            .onDisappear {
+                if themeColorCode != selectedTheme.rawValue {
+                    themeColorCode = selectedTheme.rawValue
+                }
+            }
             .navigationTitle(language.text("settings.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -157,7 +165,7 @@ struct SettingsView: View {
                     Spacer()
                     Image(systemName: "arrow.up.right")
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(AppTheme.accent)
+                        .foregroundStyle(selectedTheme.color)
                         .frame(width: 28, height: 28)
                 }
                 .contentShape(Rectangle())

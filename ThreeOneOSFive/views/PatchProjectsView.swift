@@ -100,26 +100,9 @@ struct PatchProjectsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button {
-                            showCreate = true
-                        } label: {
-                            Label(language.text("patch.new"), systemImage: "doc.badge.plus")
-                        }
-                        Button {
-                            showImporter = true
-                        } label: {
-                            Label(language.text("patch.import"), systemImage: "square.and.arrow.down")
-                        }
-                    } label: {
-                        if store.isBusy {
-                            ProgressView()
-                        } else {
-                            Image(systemName: "plus")
-                        }
+                    if store.isBusy {
+                        ProgressView()
                     }
-                    .disabled(store.isBusy)
-                    .accessibilityLabel(language.text("patch.add"))
                 }
             }
             .sheet(isPresented: $showImporter) {
@@ -252,9 +235,6 @@ struct PatchProjectsView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button(language.text("patch.new")) { showCreate = true }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 64)
@@ -458,20 +438,6 @@ private struct PatchProjectDetailView: View {
                         LabeledContent(language.text("patch.folders")) {
                             Text("\(project.directories.count)")
                         }
-                        if let workspaceURL = item.workspaceURL {
-                            NavigationLink {
-                                FileBrowserView(
-                                    containerPath: workspaceURL.path,
-                                    title: project.name,
-                                    bundleID: nil
-                                )
-                            } label: {
-                                Label(
-                                    language.text("patch.open_workspace"),
-                                    systemImage: "folder"
-                                )
-                            }
-                        }
                     } header: {
                         Text(language.text("patch.workspace"))
                     } footer: {
@@ -530,11 +496,6 @@ private struct PatchProjectDetailView: View {
                         }
                         .disabled(isWorking)
                     }
-
-                    Button(action: prepareExport) {
-                        actionLabel("patch.export", systemImage: "square.and.arrow.up")
-                    }
-                    .disabled(isWorking)
                 } footer: {
                     Text(language.text("patch.apply_footer"))
                 }

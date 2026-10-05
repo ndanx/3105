@@ -14,12 +14,12 @@
 "common.finish" = "Finalizar";
 
 "update.title" = "Actualización disponible";
-"update.message" = "3105 %@ está disponible en GitHub.";
+"update.message" = "Injector iOS %@ está disponible en GitHub.";
 "update.agree" = "Aceptar";
 "update.dismiss" = "No volver a mostrar";
 "patch.error.wrong_password" = "Contraseña incorrecta.";
 
-"attribution.title" = "Acerca de 3105";
+"attribution.title" = "Acerca de Injector iOS";
 "attribution.subtitle" = "Información del proyecto";
 "attribution.link_section" = "Enlace del proyecto";
 "attribution.url" = "URL";
@@ -30,18 +30,18 @@
 "onboarding.language_title" = "Elige tu idioma";
 "onboarding.language_subtitle" = "Puedes cambiarlo después en Ajustes.";
 "onboarding.language_hint" = "Selecciona un idioma para continuar.";
-"onboarding.welcome_title" = "Te damos la bienvenida a 3105";
-"onboarding.welcome_message" = "Desarrollado por YangJiii";
-"onboarding.welcome_badge" = "Identidad oficial de 3105";
+"onboarding.welcome_title" = "Te damos la bienvenida a Injector iOS";
+"onboarding.welcome_message" = "Desarrollado por Dan Vip";
+"onboarding.welcome_badge" = "Identidad oficial de Injector iOS";
 "onboarding.versions_title" = "Versiones de iOS compatibles";
-"onboarding.versions_subtitle" = "3105 está verificado en los rangos de abajo. Las versiones no compatibles se bloquean.";
+"onboarding.versions_subtitle" = "Injector iOS está verificado en los rangos de abajo. Las versiones no compatibles se bloquean.";
 "onboarding.versions_footer" = "Este dispositivo: iOS %@ (%@)";
 "onboarding.beta" = "Beta";
 "onboarding.install_title" = "Requisitos del certificado";
-"onboarding.install_message" = "3105 necesita un método de firma compatible para acceder a las funciones del dispositivo.";
+"onboarding.install_message" = "Injector iOS necesita un método de firma compatible para acceder a las funciones del dispositivo.";
 "onboarding.install_ok" = "Funciona con certificados enterprise, incluidos eSign e instalaciones enterprise similares.";
 "onboarding.install_bad" = "No funciona con SideStore, AltStore, 3uTools ni LiveContainer.";
-"onboarding.install_jailbreak" = "En iOS 17 hasta iOS 18.7.1, 3105 no funcionará si el dispositivo tiene jailbreak.";
+"onboarding.install_jailbreak" = "En iOS 17 hasta iOS 18.7.1, Injector iOS no funcionará si el dispositivo tiene jailbreak.";
 "onboarding.install_footer" = "Usa un certificado compatible en un dispositivo sin jailbreak antes de continuar.";
 
 "dashboard.exploit_access" = "Acceso del exploit";
@@ -70,7 +70,7 @@
 "dashboard.kernel_running" = "Activando…";
 "dashboard.kernel_active" = "Activo";
 "dashboard.kernel_inactive" = "Inactivo";
-"dashboard.enterprise_signing" = "3105 solo funciona si está firmado con un certificado enterprise. SideStore, AltStore, 3uTools y LiveContainer no son compatibles.";
+"dashboard.enterprise_signing" = "Injector iOS solo funciona si está firmado con un certificado enterprise. SideStore, AltStore, 3uTools y LiveContainer no son compatibles.";
 "dashboard.features" = "Funciones";
 "dashboard.features_footer" = "Activa Limpiador o Fondos para mostrarlos en la navegación de la app.";
 "tab.home" = "Inicio";
@@ -97,7 +97,7 @@
 "cleaner.clean_button" = "Limpiar %@";
 "cleaner.cleaning" = "Limpiando…";
 "cleaner.confirm_title" = "¿Eliminar datos temporales?";
-"cleaner.confirm_message" = "3105 eliminará de forma permanente Library/Caches y tmp de %lld apps seleccionadas (%@). Cierra esas apps antes. Pueden abrirse más lento mientras reconstruyen las cachés. Esta acción no se puede deshacer.";
+"cleaner.confirm_message" = "Injector iOS eliminará de forma permanente Library/Caches y tmp de %lld apps seleccionadas (%@). Cierra esas apps antes. Pueden abrirse más lento mientras reconstruyen las cachés. Esta acción no se puede deshacer.";
 "cleaner.confirm_action" = "Limpiar ahora";
 "cleaner.result_title" = "Limpieza finalizada";
 "cleaner.result_message" = "Se liberaron %@ al eliminar %lld archivos. No se pudieron limpiar %lld elementos o apps.";
@@ -127,13 +127,13 @@
 "patch.project" = "Proyecto";
 "patch.project_name" = "Nombre del proyecto";
 "patch.target_bundle" = "Bundle de destino";
-"patch.workspace_bundle_footer" = "3105 crea esta carpeta de bundle en el espacio de trabajo editable del parche. Los UUID de contenedor nunca se guardan.";
+"patch.workspace_bundle_footer" = "Injector iOS crea esta carpeta de bundle en el espacio de trabajo editable del parche. Los UUID de contenedor nunca se guardan.";
 "patch.captured_content" = "Contenido capturado";
-"patch.workspace_edit_footer" = "Después de crearlo, administra todo el árbol del bundle desde el espacio de trabajo de 3105 en Archivos.";
+"patch.workspace_edit_footer" = "Después de crearlo, administra todo el árbol del bundle desde el espacio de trabajo de Injector iOS en Archivos.";
 "patch.workspace" = "Espacio de trabajo";
 "patch.open_workspace" = "Abrir archivos del parche";
 "patch.workspace_detail_footer" = "Edita este árbol del bundle directamente. Aplicar y Exportar lo sincronizan automáticamente con el paquete .3105 cifrado.";
-"patch.legacy_footer" = "Parche heredado v1. Sigue siendo totalmente utilizable en esta versión de 3105.";
+"patch.legacy_footer" = "Parche heredado v1. Sigue siendo totalmente utilizable en esta versión de Injector iOS.";
 "patch.files" = "Archivos";
 "patch.folders" = "Carpetas";
 "patch.rules" = "Reglas";
@@ -172,7 +172,7 @@
 "patch.unlock" = "Desbloquear";
 "patch.apply" = "Aplicar parche";
 "patch.restore" = "Restaurar originales";
-"patch.apply_footer" = "Antes de escribir, 3105 resuelve cada bundle en este dispositivo y guarda cada archivo original para poder recuperarlo.";
+"patch.apply_footer" = "Antes de escribir, Injector iOS resuelve cada bundle en este dispositivo y guarda cada archivo original para poder recuperarlo.";
 "patch.apply_confirm_title" = "¿Aplicar este parche?";
 "patch.apply_confirm_message" = "Se volverán a validar todos los bundle identifiers y rutas relativas. Los originales se respaldan antes de la primera escritura.";
 "patch.restore_confirm_title" = "¿Restaurar los archivos originales?";
@@ -184,7 +184,7 @@
 "patch.applied_message" = "Se aplicaron todas las reglas del parche y se respaldaron los originales.";
 "patch.restored_message" = "Se restauraron los archivos originales.";
 "patch.error.unsupported_format" = "Este no es un paquete de parche .3105 válido.";
-"patch.error.unsupported_version" = "Este parche requiere una versión más reciente de 3105. Actualiza la app antes de importarlo.";
+"patch.error.unsupported_version" = "Este parche requiere una versión más reciente de Injector iOS. Actualiza la app antes de importarlo.";
 "patch.error.password_or_corrupt" = "La contraseña es incorrecta o el paquete fue modificado.";
 "patch.error.invalid_bundle" = "Ingresa un bundle identifier de app válido, no un UUID de contenedor.";
 "patch.error.unsafe_path" = "El destino debe ser una ruta segura relativa al contenedor de datos de la app.";
@@ -205,7 +205,7 @@
 "accessibility.requesting_access" = "Solicitando acceso del exploit";
 "accessibility.open_editor_hint" = "Abre el editor de funciones de MobileGestalt";
 "accessibility.run_exploit_hint" = "Solicita el acceso de escritura que necesita Gestalt Editor";
-"accessibility.open_github" = "Abrir 3105 en GitHub";
+"accessibility.open_github" = "Abrir Injector iOS en GitHub";
 "accessibility.open_profile" = "Abrir perfil de %@";
 "accessibility.log_entry" = "Entrada de registro %lld: %@";
 
@@ -244,15 +244,9 @@
 "settings.token_footer" = "Disponible después de que el acceso del exploit tenga éxito.";
 "settings.credits" = "Créditos";
 "settings.social_media" = "Redes sociales";
-"social.github_role" = "Código fuente de 3105";
-"social.iosvn_role" = "Comunidad iOSVN";
-"credit.yangjiii" = "Desarrollo y diseño";
-"credit.forcequit" = "Exploit bad_query";
-"credit.filzaslop" = "FilzaSlop — MHA-C2 y detección de apps";
-"credit.pocket_poster" = "Pocket Poster, Nugget y formato .tendies";
-"credit.sandbox_escape" = "Base de escape del sandbox de FilzaSlop";
-"credit.opa" = "Jailbreak Dopamine, base de kexploit";
-"credit.seo" = "Port de kexploit_opa334";
+"social.github_role" = "Código fuente de Injector iOS";
+"credit.danvip" = "Desarrollo y diseño";
+
 
 "gestalt.title" = "Gestalt Editor";
 "gestalt.apply_changes" = "Aplicar cambios";
@@ -321,7 +315,7 @@
 "logs.empty_message" = "La actividad del exploit y del editor aparecerá aquí durante esta sesión.";
 
 "browser.title" = "Explorador de datos de apps";
-"browser.workspace" = "Espacio de trabajo de 3105";
+"browser.workspace" = "Espacio de trabajo de Injector iOS";
 "browser.workspace_subtitle" = "Parches y archivos disponibles en En mi iPhone";
 "browser.loading" = "Cargando…";
 "browser.empty" = "No se pudo resolver ningún bundle de aplicación. Toca Reintentar para analizar de nuevo.";
@@ -471,21 +465,21 @@
 "wallpaper.additive_only" = "Agrega descriptores nuevos sin reemplazar Colecciones";
 "wallpaper.uuid_dynamic" = "Resuelve com.apple.PosterBoard de forma dinámica";
 "wallpaper.archive_validation" = "Comprueba rutas, tamaños, enlaces simbólicos y CRC del ZIP antes de instalar";
-"wallpaper.ios27_footer" = "PosterBoard depende de la versión. 3105 detecta la estructura real del almacén en lugar de suponer la generación 61, pero algunos fondos basados en plugins pueden seguir siendo incompatibles con iOS 27.";
+"wallpaper.ios27_footer" = "PosterBoard depende de la versión. Injector iOS detecta la estructura real del almacén en lugar de suponer la generación 61, pero algunos fondos basados en plugins pueden seguir siendo incompatibles con iOS 27.";
 "wallpaper.install" = "Aplicar";
 "wallpaper.install_warning_title" = "¿Instalar este paquete de fondos?";
 "wallpaper.install_warning_message" = "¿Aplicar “%@” con %lld fondos en iOS %@ (%@)? Los fondos existentes no cambian.";
-"wallpaper.installed_by_3105" = "Fondos agregados por 3105";
-"wallpaper.reset" = "Restablecer fondos de 3105";
-"wallpaper.reset_footer" = "Solo se eliminan los fondos agregados por 3105.";
+"wallpaper.installed_by_3105" = "Fondos agregados por Injector iOS";
+"wallpaper.reset" = "Restablecer fondos de Injector iOS";
+"wallpaper.reset_footer" = "Solo se eliminan los fondos agregados por Injector iOS.";
 "wallpaper.reset_title" = "¿Restablecer los fondos agregados?";
-"wallpaper.reset_message" = "¿Eliminar %lld fondos agregados por 3105? Los fondos existentes no cambian.";
+"wallpaper.reset_message" = "¿Eliminar %lld fondos agregados por Injector iOS? Los fondos existentes no cambian.";
 "wallpaper.reset_done_title" = "Restablecimiento completo";
-"wallpaper.reset_done_message" = "Se eliminaron los fondos agregados por 3105 y se actualizó PosterBoard.";
+"wallpaper.reset_done_message" = "Se eliminaron los fondos agregados por Injector iOS y se actualizó PosterBoard.";
 "wallpaper.restore_title" = "¿Restaurar esta instalación?";
-"wallpaper.restore_message" = "Esto elimina %lld carpetas de descriptores agregadas antes por 3105. Los fondos que existían antes de la instalación se conservan.";
+"wallpaper.restore_message" = "Esto elimina %lld carpetas de descriptores agregadas antes por Injector iOS. Los fondos que existían antes de la instalación se conservan.";
 "wallpaper.delete_title" = "¿Quitar el paquete importado?";
-"wallpaper.delete_message" = "“%@” se quitará del almacenamiento temporal de 3105. Los fondos instalados no se ven afectados.";
+"wallpaper.delete_message" = "“%@” se quitará del almacenamiento temporal de Injector iOS. Los fondos instalados no se ven afectados.";
 "wallpaper.importing" = "Validando paquetes .tendies…";
 "wallpaper.installing" = "Instalando descriptores de forma segura…";
 "wallpaper.restoring" = "Restableciendo fondos…";
@@ -496,7 +490,7 @@
 "wallpaper.install_done_opened" = "Se abrió PosterBoard para actualizar sus colecciones. Ciérralo desde el selector de apps y luego revisa el selector de fondos de la pantalla de bloqueo.";
 "wallpaper.install_done_manual" = "Abre el selector de fondos de la pantalla de bloqueo para actualizar PosterBoard. Si no ves el fondo, cierra PosterBoard desde el selector de apps e inténtalo de nuevo.";
 "wallpaper.restore_done_title" = "Instalación restaurada";
-"wallpaper.restore_done_message" = "Se eliminaron los descriptores agregados por 3105. Se pidió a PosterBoard que se actualice.";
+"wallpaper.restore_done_message" = "Se eliminaron los descriptores agregados por Injector iOS. Se pidió a PosterBoard que se actualice.";
 "wallpaper.operation_failed" = "Falló la operación del fondo";
 "wallpaper.error.unsafe_container" = "PosterBoard devolvió una ruta de contenedor insegura o inesperada.";
 "wallpaper.error.store_unavailable" = "El almacén de extensiones de PosterBoard no está disponible en esta versión.";
@@ -504,14 +498,20 @@
 "wallpaper.error.package" = "Este no es un paquete .tendies compatible.";
 "wallpaper.error.archive" = "El archivo está mal formado o contiene una ruta insegura.";
 "wallpaper.error.symlink" = "Los paquetes de fondos y las carpetas de destino no pueden contener enlaces simbólicos.";
-"wallpaper.error.size" = "El paquete de fondos supera los límites seguros de tamaño o de elementos de 3105.";
+"wallpaper.error.size" = "El paquete de fondos supera los límites seguros de tamaño o de elementos de Injector iOS.";
 "wallpaper.error.no_descriptors" = "No se encontraron descriptores de fondos compatibles en este paquete.";
-"wallpaper.error.access" = "3105 no pudo obtener acceso verificado de lectura y escritura a com.apple.PosterBoard.";
+"wallpaper.error.access" = "Injector iOS no pudo obtener acceso verificado de lectura y escritura a com.apple.PosterBoard.";
 "wallpaper.error.backup" = "No se pudo escribir el registro de recuperación, por lo que se detuvo la instalación.";
 "wallpaper.error.install" = "La instalación falló y se revirtieron los descriptores agregados durante este intento.";
-"wallpaper.error.restore" = "3105 no pudo eliminar de forma segura todos los descriptores de esta instalación.";
+"wallpaper.error.restore" = "Injector iOS no pudo eliminar de forma segura todos los descriptores de esta instalación.";
 "wallpaper.error.unknown" = "Ocurrió un error inesperado. Revisa los registros de la sesión para ver los detalles.";
 
 "patch.catalog_download" = "Descargar parche";
 "patch.catalog_downloading" = "Descargando…";
 "patch.catalog_load_failed" = "No se pudo cargar el catálogo de parches.";
+
+"settings.theme" = "Tema";
+"settings.theme_orange" = "Naranja";
+"settings.theme_red" = "Rojo";
+"settings.theme_blue" = "Azul";
+"settings.theme_green" = "Verde";

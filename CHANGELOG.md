@@ -11,9 +11,15 @@ Modifications to 3105 1.1.1 (GPL-3.0), based on https://github.com/YangJiiii/310
 - Remote patch catalog: the Patches tab lists the patches published in `catalog/catalog.json`, each with a "Download patch" button, mixed with the local patches.
 - Spanish localization.
 - GitHub Actions workflow that builds an unsigned IPA.
+- Accent color selector in Settings (orange, red, blue, green).
 
 ### Removed
 
+- "Export .3105" and "Open Patch Files" buttons from the patch detail screen.
+- "+" button (create/import patch) in the Patches tab, and the "New patch" button in its empty state.
+- Files tab.
+- Visibility of the app's Documents folder (including the Patches workspace) in the iOS Files app.
+- Cleaner and Wallpapers toggles; both features are permanently disabled in this build.
 - Vietnamese and Simplified Chinese from the language selector (the strings files remain in the repository but are no longer bundled).
 
 ## [1.0.1] - 2026-08-15

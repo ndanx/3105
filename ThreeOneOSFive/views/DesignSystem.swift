@@ -1,13 +1,59 @@
 import SwiftUI
 
-enum AppTheme {
-    static let accent = Color(
-        uiColor: UIColor { traits in
-            traits.userInterfaceStyle == .dark
-                ? UIColor(red: 1.00, green: 0.64, blue: 0.42, alpha: 1.00)
-                : UIColor(red: 0.85, green: 0.42, blue: 0.20, alpha: 1.00)
+enum AppThemeColor: String, CaseIterable, Identifiable {
+    static let storageKey = "appThemeColor"
+
+    case orange
+    case red
+    case blue
+    case green
+
+    var id: String { rawValue }
+
+    var titleKey: String { "settings.theme_\(rawValue)" }
+
+    static var current: AppThemeColor {
+        UserDefaults.standard.string(forKey: storageKey)
+            .flatMap(AppThemeColor.init(rawValue:)) ?? .orange
+    }
+
+    var color: Color {
+        let pair = components
+        return Color(
+            uiColor: UIColor { traits in
+                traits.userInterfaceStyle == .dark ? pair.dark : pair.light
+            }
+        )
+    }
+
+    private var components: (dark: UIColor, light: UIColor) {
+        switch self {
+        case .orange:
+            return (
+                UIColor(red: 1.00, green: 0.64, blue: 0.42, alpha: 1.00),
+                UIColor(red: 0.85, green: 0.42, blue: 0.20, alpha: 1.00)
+            )
+        case .red:
+            return (
+                UIColor(red: 1.00, green: 0.40, blue: 0.40, alpha: 1.00),
+                UIColor(red: 0.80, green: 0.15, blue: 0.15, alpha: 1.00)
+            )
+        case .blue:
+            return (
+                UIColor(red: 0.40, green: 0.65, blue: 1.00, alpha: 1.00),
+                UIColor(red: 0.10, green: 0.40, blue: 0.85, alpha: 1.00)
+            )
+        case .green:
+            return (
+                UIColor(red: 0.35, green: 0.85, blue: 0.50, alpha: 1.00),
+                UIColor(red: 0.10, green: 0.60, blue: 0.30, alpha: 1.00)
+            )
         }
-    )
+    }
+}
+
+enum AppTheme {
+    static var accent: Color { AppThemeColor.current.color }
     static let pageBackground = Color(uiColor: .systemBackground)
     static let consoleBackground = Color(uiColor: .secondarySystemBackground)
     static let pageInset: CGFloat = 16

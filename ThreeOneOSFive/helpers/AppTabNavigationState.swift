@@ -49,7 +49,10 @@ struct FeatureVisibility: Equatable {
             return cleanerEnabled
         case .wallpapers:
             return wallpapersEnabled && wallpapersSupported
-        case .home, .files, .patches:
+        case .files:
+            // The Files tab is removed in this build.
+            return false
+        case .home, .patches:
             return true
         }
     }
