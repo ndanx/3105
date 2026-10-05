@@ -32,8 +32,7 @@ private struct PatchCatalogFile: Decodable {
 
 enum PatchCatalogService {
     /// Public URL of the catalog.json file (raw file of the fork on GitHub).
-    static let catalogURL = URL(string: "https://raw.githubusercontent.com/USUARIO/3105/main/catalog/catalog.json")!
-
+        static let catalogURL = URL(string: "https://raw.githubusercontent.com/ndanx/3105/base-1.1.1/catalog/catalog.json")!
     static func fetch() async throws -> [PatchCatalogEntry] {
         var request = URLRequest(
             url: catalogURL,
