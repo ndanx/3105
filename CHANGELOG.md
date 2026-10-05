@@ -12,13 +12,14 @@ Modifications to 3105 1.1.1 (GPL-3.0), based on https://github.com/YangJiiii/310
 - Spanish localization.
 - GitHub Actions workflow that builds an unsigned IPA.
 - Accent color selector in Settings (orange, red, blue, green).
+- Patch rows show the version (with a tag icon) and size; installed patches show their catalog description and an "Open details" button, which is now the only way into the patch details.
 
 ### Removed
 
 - "Export .3105" and "Open Patch Files" buttons from the patch detail screen.
 - "+" button (create/import patch) in the Patches tab, and the "New patch" button in its empty state.
 - Files tab.
-- Visibility of the app's Documents folder (including the Patches workspace) in the iOS Files app.
+- Visibility of the app's Documents folder (including the Patches workspace) in the iOS Files app. Patch workspaces are now stored in Application Support (existing ones are moved there on launch).
 - Cleaner and Wallpapers toggles; both features are permanently disabled in this build.
 - Vietnamese and Simplified Chinese from the language selector (the strings files remain in the repository but are no longer bundled).
 

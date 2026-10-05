@@ -18,6 +18,7 @@ struct PatchProjectsView: View {
     @StateObject private var catalog = PatchCatalogStore()
     @State private var downloadingID: String?
     @State private var itemIDsBeforeDownload: Set<UUID> = []
+    @State private var detailItemID: UUID?
 
     private var filteredItems: [PatchLibraryItem] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -98,6 +99,14 @@ struct PatchProjectsView: View {
             }
             .navigationTitle(language.text("patch.title"))
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: Binding(
+                get: { detailItemID != nil },
+                set: { if !$0 { detailItemID = nil } }
+            )) {
+                if let id = detailItemID {
+                    PatchProjectDetailView(store: store, projectID: id)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if store.isBusy {
@@ -216,10 +225,12 @@ struct PatchProjectsView: View {
             }
             .buttonStyle(.plain)
         } else {
-            NavigationLink {
-                PatchProjectDetailView(store: store, projectID: item.id)
-            } label: {
-                PatchProjectRow(item: item, language: language)
+            PatchInstalledRow(
+                item: item,
+                entry: catalog.entry(for: item),
+                language: language
+            ) {
+                detailItemID = item.id
             }
         }
     }
@@ -289,23 +300,104 @@ private struct PatchProjectRow: View {
     }
 }
 
+private struct PatchMetaLine: View {
+    let version: String?
+    let size: Int64?
+    let language: AppLanguage
+
+    private var hasContent: Bool {
+        !(version ?? "").isEmpty || (size ?? 0) > 0
+    }
+
+    var body: some View {
+        if hasContent {
+            HStack(spacing: 12) {
+                Image(systemName: "tag")
+                    .font(.system(size: 17, weight: .regular))
+                    .foregroundStyle(.secondary)
+                    .frame(width: AppTheme.rowIconFrame)
+                HStack(spacing: 10) {
+                    if let version, !version.isEmpty {
+                        Text(language.text("common.version", version))
+                    }
+                    if let size, size > 0 {
+                        Text(ByteCountFormatter.string(fromByteCount: size, countStyle: .file))
+                    }
+                }
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                Spacer(minLength: 0)
+            }
+        }
+    }
+}
+
+private struct PatchInstalledRow: View {
+    let item: PatchLibraryItem
+    let entry: PatchCatalogEntry?
+    let language: AppLanguage
+    let onOpen: () -> Void
+
+    private var subtitle: String {
+        if let summary = entry?.summary, !summary.isEmpty { return summary }
+        return language.text(
+            item.summary.schemaVersion >= 2 ? "patch.workspace_items_count" : "patch.rules_count",
+            Int64((item.project?.rules.count ?? 0) + (item.project?.directories.count ?? 0))
+        )
+    }
+
+    private var localSize: Int64? {
+        let values = try? item.packageURL.resourceValues(forKeys: [.fileSizeKey])
+        return values?.fileSize.map(Int64.init)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top, spacing: 12) {
+                AppRowIcon(systemName: "shippingbox.fill")
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(item.project?.name ?? language.text("patch.locked_project"))
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(.primary)
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(3)
+                }
+                Spacer(minLength: 0)
+                if item.summary.isPasswordProtected {
+                    Image(systemName: "key.fill")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(language.text("patch.password_protected"))
+                }
+            }
+            PatchMetaLine(version: entry?.version, size: localSize, language: language)
+            Button(action: onOpen) {
+                HStack(spacing: 10) {
+                    Image(systemName: "arrow.right.circle.fill")
+                    Text(language.text("patch.open_details"))
+                        .fontWeight(.semibold)
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .foregroundStyle(.primary)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
+        }
+        .padding(.vertical, 4)
+    }
+}
+
 private struct PatchCatalogRow: View {
     let entry: PatchCatalogEntry
     let language: AppLanguage
     let isDownloading: Bool
     let isDisabled: Bool
     let onDownload: () -> Void
-
-    private var meta: String? {
-        var parts: [String] = []
-        if let version = entry.version, !version.isEmpty {
-            parts.append(language.text("common.version", version))
-        }
-        if let size = entry.size, size > 0 {
-            parts.append(ByteCountFormatter.string(fromByteCount: size, countStyle: .file))
-        }
-        return parts.isEmpty ? nil : parts.joined(separator: " · ")
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -321,14 +413,10 @@ private struct PatchCatalogRow: View {
                             .foregroundStyle(.secondary)
                             .lineLimit(3)
                     }
-                    if let meta {
-                        Text(meta)
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
-                    }
                 }
                 Spacer(minLength: 0)
             }
+            PatchMetaLine(version: entry.version, size: entry.size, language: language)
             Button(action: onDownload) {
                 HStack(spacing: 8) {
                     if isDownloading {

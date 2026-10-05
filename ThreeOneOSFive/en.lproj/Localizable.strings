@@ -509,6 +509,7 @@
 "patch.catalog_download" = "Download patch";
 "patch.catalog_downloading" = "Downloading…";
 "patch.catalog_load_failed" = "Couldn't load the patch catalog.";
+"patch.open_details" = "Open details";
 
 "settings.theme" = "Theme";
 "settings.theme_orange" = "Orange";

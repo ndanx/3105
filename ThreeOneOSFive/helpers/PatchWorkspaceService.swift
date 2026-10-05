@@ -19,11 +19,43 @@ enum PatchWorkspaceService {
         )
     }
 
+    /// Patch workspaces live in Application Support, which the Files app never shows.
+    /// (Documents is exposed by some signing tools, so nothing is stored there.)
     static func patchesRootURL(fileManager: FileManager = .default) throws -> URL {
-        let documents = try documentsRootURL(fileManager: fileManager)
-        let root = documents.appendingPathComponent("Patches", isDirectory: true)
+        let base = try fileManager.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+        )
+        let root = base.appendingPathComponent("PatchWorkspaces", isDirectory: true)
         try fileManager.createDirectory(at: root, withIntermediateDirectories: true)
+        migrateLegacyPatchesRoot(to: root, fileManager: fileManager)
         return root
+    }
+
+    /// Moves workspaces left in the old Documents/Patches folder to the private location.
+    private static func migrateLegacyPatchesRoot(to root: URL, fileManager: FileManager) {
+        guard let documents = try? documentsRootURL(fileManager: fileManager) else { return }
+        let legacy = documents.appendingPathComponent("Patches", isDirectory: true)
+        guard fileManager.fileExists(atPath: legacy.path),
+              let children = try? fileManager.contentsOfDirectory(
+                at: legacy,
+                includingPropertiesForKeys: nil,
+                options: []
+              ) else { return }
+        for child in children {
+            let destination = root.appendingPathComponent(child.lastPathComponent)
+            if fileManager.fileExists(atPath: destination.path) {
+                try? fileManager.removeItem(at: child)
+            } else {
+                try? fileManager.moveItem(at: child, to: destination)
+            }
+        }
+        let remaining = (try? fileManager.contentsOfDirectory(atPath: legacy.path)) ?? []
+        if remaining.isEmpty {
+            try? fileManager.removeItem(at: legacy)
+        }
     }
 
     static func createWorkspace(

@@ -509,6 +509,7 @@
 "patch.catalog_download" = "Descargar parche";
 "patch.catalog_downloading" = "Descargando…";
 "patch.catalog_load_failed" = "No se pudo cargar el catálogo de parches.";
+"patch.open_details" = "Abrir detalles";
 
 "settings.theme" = "Tema";
 "settings.theme_orange" = "Naranja";

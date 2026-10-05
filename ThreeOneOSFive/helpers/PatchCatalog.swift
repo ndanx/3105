@@ -97,6 +97,19 @@ final class PatchCatalogStore: ObservableObject {
         }
     }
 
+    /// Catalog entry that a locally installed patch came from, if any.
+    func entry(for item: PatchLibraryItem) -> PatchCatalogEntry? {
+        if let match = entries.first(where: { $0.packageID == item.id }) {
+            return match
+        }
+        if let key = installedMap.first(where: { UUID(uuidString: $0.value) == item.id })?.key,
+           let match = entries.first(where: { $0.id == key }) {
+            return match
+        }
+        guard let name = item.project?.name else { return nil }
+        return entries.first { $0.name.caseInsensitiveCompare(name) == .orderedSame }
+    }
+
     func recordInstall(entryID: String, packageID: UUID) {
         installedMap[entryID] = packageID.uuidString
         UserDefaults.standard.set(installedMap, forKey: Self.installedKey)
