@@ -109,6 +109,23 @@ struct PatchProjectsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button {
+                            showCreate = true
+                        } label: {
+                            Label(language.text("patch.new"), systemImage: "square.and.pencil")
+                        }
+                        Button {
+                            showImporter = true
+                        } label: {
+                            Label(language.text("patch.import"), systemImage: "arrow.down.doc")
+                        }
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .accessibilityLabel(language.text("patch.add"))
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     if store.isBusy {
                         ProgressView()
                     }
