@@ -38,5 +38,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: 3105-unsigned-ipa
+          name: 3105-unsigned
           path: 3105-unsigned.ipa
