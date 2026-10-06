@@ -4,6 +4,8 @@
 "common.done" = "Done";
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
+"common.error" = "Error";
+"common.save" = "Save";
 "common.clear" = "Clear search";
 "common.failed" = "Failed";
 "common.version" = "Version %@";
@@ -76,6 +78,20 @@
 "tab.home" = "Home";
 "tab.files" = "Files";
 "tab.patches" = "Patches";
+"tab.admin" = "Licenses";
+"admin.title" = "License Administration";
+"admin.access" = "Administrator access";
+"admin.token" = "Admin token";
+"admin.token_footer" = "The token is used only in this session and is never saved in the app or source code.";
+"admin.connect" = "Connect";
+"admin.disconnect" = "Clear token";
+"admin.licenses" = "Licenses";
+"admin.create" = "Create license";
+"admin.name" = "Name (optional)";
+"admin.policy_id" = "Policy ID";
+"admin.suspend" = "Suspend";
+"admin.reinstate" = "Reinstate";
+"admin.revoke" = "Revoke";
 "tab.cleaner" = "Cleaner";
 
 "cleaner.title" = "Cleaner";

@@ -21,14 +21,32 @@ struct PatchPasswordRequest: Identifiable {
 enum PatchProjectLibrary {
     static func packageRootURL(fileManager: FileManager = .default) throws -> URL {
         let base = try fileManager.url(
-            for: .applicationSupportDirectory,
+            for: .documentDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
             create: true
         )
-        let root = base.appendingPathComponent("PatchProjects", isDirectory: true)
+        let root = base.appendingPathComponent("Patches", isDirectory: true)
         try fileManager.createDirectory(at: root, withIntermediateDirectories: true)
+        migrateLegacyPackages(to: root, fileManager: fileManager)
         return root
+    }
+
+    private static func migrateLegacyPackages(to root: URL, fileManager: FileManager) {
+        guard let support = try? fileManager.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else { return }
+        let legacy = support.appendingPathComponent("PatchProjects", isDirectory: true)
+        guard let children = try? fileManager.contentsOfDirectory(at: legacy, includingPropertiesForKeys: nil) else { return }
+        for child in children where child.pathExtension.lowercased() == "3105" {
+            let destination = root.appendingPathComponent(child.lastPathComponent)
+            if !fileManager.fileExists(atPath: destination.path) {
+                try? fileManager.moveItem(at: child, to: destination)
+            }
+        }
     }
 
     static func backupRootURL(fileManager: FileManager = .default) throws -> URL {

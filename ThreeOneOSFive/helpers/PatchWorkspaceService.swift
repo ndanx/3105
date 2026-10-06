@@ -19,25 +19,24 @@ enum PatchWorkspaceService {
         )
     }
 
-    /// Patch workspaces live in Application Support, which the Files app never shows.
-    /// (Documents is exposed by some signing tools, so nothing is stored there.)
+    /// Personal builds intentionally expose patch workspaces through the Files app.
     static func patchesRootURL(fileManager: FileManager = .default) throws -> URL {
-        let base = try fileManager.url(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
-        )
-        let root = base.appendingPathComponent("PatchWorkspaces", isDirectory: true)
+        let root = try documentsRootURL(fileManager: fileManager)
+            .appendingPathComponent("Patches", isDirectory: true)
         try fileManager.createDirectory(at: root, withIntermediateDirectories: true)
         migrateLegacyPatchesRoot(to: root, fileManager: fileManager)
         return root
     }
 
-    /// Moves workspaces left in the old Documents/Patches folder to the private location.
+    /// Moves workspaces from the previous private location into Documents/Patches.
     private static func migrateLegacyPatchesRoot(to root: URL, fileManager: FileManager) {
-        guard let documents = try? documentsRootURL(fileManager: fileManager) else { return }
-        let legacy = documents.appendingPathComponent("Patches", isDirectory: true)
+        guard let support = try? fileManager.url(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else { return }
+        let legacy = support.appendingPathComponent("PatchWorkspaces", isDirectory: true)
         guard fileManager.fileExists(atPath: legacy.path),
               let children = try? fileManager.contentsOfDirectory(
                 at: legacy,

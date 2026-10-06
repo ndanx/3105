@@ -47,6 +47,8 @@
 		3105K201 /* PatchCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105K101; };
 		3105L201 /* LicenseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105L101; };
 		3105L202 /* LicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105L102; };
+		3105M201 /* AdminLicenseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105M101; };
+		3105M202 /* AdminLicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105M102; };
 		3105C200 /* PatchDraftService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C100; };
 		3105C201 /* PatchDraftCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C101; };
 		3105C202 /* FolderPatchSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3105C102; };
@@ -132,6 +134,8 @@
 		3105K101 /* PatchCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchCatalog.swift; sourceTree = "<group>"; };
 		3105L101 /* LicenseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseService.swift; sourceTree = "<group>"; };
 		3105L102 /* LicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseView.swift; sourceTree = "<group>"; };
+		3105M101 /* AdminLicenseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLicenseService.swift; sourceTree = "<group>"; };
+		3105M102 /* AdminLicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLicensesView.swift; sourceTree = "<group>"; };
 		3105C100 /* PatchDraftService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDraftService.swift; sourceTree = "<group>"; };
 		3105C101 /* PatchDraftCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDraftCoordinator.swift; sourceTree = "<group>"; };
 		3105C102 /* FolderPatchSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPatchSelectionView.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 			children = (
 				3105A098 /* DesignSystem.swift */,
 				3105L102 /* LicenseView.swift */,
+				3105M102 /* AdminLicensesView.swift */,
 				3105A023 /* SettingsView.swift */,
 				3105A024 /* LogView.swift */,
 				3105A105 /* AppDataBrowserView.swift */,
@@ -257,6 +262,7 @@
 				3105B120 /* PatchProjectStore.swift */,
 				3105K101 /* PatchCatalog.swift */,
 				3105L101 /* LicenseService.swift */,
+				3105M101 /* AdminLicenseService.swift */,
 				3105G103 /* PatchWorkspaceService.swift */,
 				3105H100 /* AppTabNavigationState.swift */,
 				3105C100 /* PatchDraftService.swift */,
@@ -399,6 +405,8 @@
 				3105K201,
 				3105L201,
 				3105L202,
+				3105M201,
+				3105M202,
 				3105C200,
 				3105C201,
 				3105C202,

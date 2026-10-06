@@ -1,5 +1,13 @@
 # Changelog
 
+## Personal build — license administration and visible patch files
+
+- Kept license validation as a mandatory gate at launch and foreground return.
+- Restored the Files tab and enabled document sharing for personal builds.
+- Stored patch packages and editable workspaces in `Documents/Patches` so they are visible in the iOS Files app.
+- Added a license administration tab with session-only admin-token entry, license creation, suspension, reinstatement, and revocation.
+- Admin tokens are not embedded in source code and are not persisted by the app.
+
 All notable user-facing changes are documented in this file.
 
 ## [Unreleased] - Fork changes

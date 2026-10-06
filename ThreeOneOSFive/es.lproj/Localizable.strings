@@ -4,6 +4,8 @@
 "common.done" = "Listo";
 "common.ok" = "Aceptar";
 "common.cancel" = "Cancelar";
+"common.error" = "Error";
+"common.save" = "Guardar";
 "common.clear" = "Borrar búsqueda";
 "common.failed" = "Error";
 "common.version" = "Versión %@";
@@ -76,6 +78,20 @@
 "tab.home" = "Inicio";
 "tab.files" = "Archivos";
 "tab.patches" = "Parches";
+"tab.admin" = "Licencias";
+"admin.title" = "Administrar licencias";
+"admin.access" = "Acceso de administrador";
+"admin.token" = "Token administrador";
+"admin.token_footer" = "El token se usa solo durante esta sesión y nunca se guarda en la app ni en el código fuente.";
+"admin.connect" = "Conectar";
+"admin.disconnect" = "Borrar token";
+"admin.licenses" = "Licencias";
+"admin.create" = "Crear licencia";
+"admin.name" = "Nombre (opcional)";
+"admin.policy_id" = "ID de la política";
+"admin.suspend" = "Suspender";
+"admin.reinstate" = "Reactivar";
+"admin.revoke" = "Revocar";
 "tab.cleaner" = "Limpiador";
 
 "cleaner.title" = "Limpiador";

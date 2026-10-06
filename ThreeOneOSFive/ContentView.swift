@@ -112,6 +112,8 @@ struct ContentView: View {
             )
         case .patches:
             PatchProjectsView()
+        case .admin:
+            AdminLicensesView()
         case .cleaner:
             CleanerView()
         case .wallpapers:
@@ -179,6 +181,7 @@ private extension AppSection {
         case .home: return "tab.home"
         case .files: return "tab.files"
         case .patches: return "tab.patches"
+        case .admin: return "tab.admin"
         case .cleaner: return "tab.cleaner"
         case .wallpapers: return "tab.wallpapers"
         }
@@ -189,6 +192,7 @@ private extension AppSection {
         case .home: return "house.fill"
         case .files: return "folder.fill"
         case .patches: return "shippingbox.fill"
+        case .admin: return "person.badge.key.fill"
         case .cleaner: return "sparkles"
         case .wallpapers: return "photo.on.rectangle.angled"
         }

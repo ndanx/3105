@@ -4,6 +4,7 @@ enum AppSection: Int, CaseIterable, Identifiable {
     case home
     case files
     case patches
+    case admin
     case cleaner
     case wallpapers
 
@@ -50,9 +51,8 @@ struct FeatureVisibility: Equatable {
         case .wallpapers:
             return wallpapersEnabled && wallpapersSupported
         case .files:
-            // The Files tab is removed in this build.
-            return false
-        case .home, .patches:
+            return true
+        case .home, .patches, .admin:
             return true
         }
     }
