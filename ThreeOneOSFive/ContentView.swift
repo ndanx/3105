@@ -111,7 +111,16 @@ struct ContentView: View {
                 tabSession: filesTabSession
             )
         case .patches:
-            PatchProjectsView()
+            PatchProjectsView { workspaceURL, title in
+                let destination = FileBrowserDestination(
+                    containerPath: workspaceURL.path,
+                    startPath: workspaceURL.path,
+                    title: title,
+                    bundleID: nil
+                )
+                tabNavigation.openTab(navigationPath: [destination])
+                tabNavigation.select(AppSection.files.rawValue)
+            }
         case .admin:
             AdminLicensesView()
         case .cleaner:

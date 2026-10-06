@@ -19,6 +19,7 @@ struct PatchProjectsView: View {
     @State private var downloadingID: String?
     @State private var itemIDsBeforeDownload: Set<UUID> = []
     @State private var detailItemID: UUID?
+    let onOpenFiles: (URL, String) -> Void
 
     private var filteredItems: [PatchLibraryItem] {
         let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -55,7 +56,8 @@ struct PatchProjectsView: View {
         }
     }
 
-    init() {
+    init(onOpenFiles: @escaping (URL, String) -> Void = { _, _ in }) {
+        self.onOpenFiles = onOpenFiles
 #if targetEnvironment(simulator)
         _showCreate = State(
             initialValue: ProcessInfo.processInfo.arguments.contains("--simulate-patch-editor")
@@ -104,7 +106,11 @@ struct PatchProjectsView: View {
                 set: { if !$0 { detailItemID = nil } }
             )) {
                 if let id = detailItemID {
-                    PatchProjectDetailView(store: store, projectID: id)
+                    PatchProjectDetailView(
+                        store: store,
+                        projectID: id,
+                        onOpenFiles: onOpenFiles
+                    )
                 }
             }
             .toolbar {
@@ -503,6 +509,7 @@ private struct PatchProjectDetailView: View {
     @Environment(\.appLanguage) private var language
     @ObservedObject var store: PatchProjectStore
     let projectID: UUID
+    let onOpenFiles: (URL, String) -> Void
     @State private var showEditor = false
     @State private var editingRule: PatchRule?
     @State private var showApplyConfirmation = false
@@ -586,6 +593,24 @@ private struct PatchProjectDetailView: View {
                 }
 
                 Section {
+                    if let workspaceURL = item.workspaceURL {
+                        Button {
+                            onOpenFiles(
+                                workspaceURL,
+                                item.project?.name ?? item.packageURL.deletingPathExtension().lastPathComponent
+                            )
+                        } label: {
+                            actionLabel("patch.open_workspace", systemImage: "folder")
+                        }
+                    }
+
+                    Button {
+                        prepareExport()
+                    } label: {
+                        actionLabel("patch.export", systemImage: "square.and.arrow.up")
+                    }
+                    .disabled(isWorking)
+
                     Button {
                         showApplyConfirmation = true
                     } label: {
