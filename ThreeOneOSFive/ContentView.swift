@@ -118,7 +118,9 @@ struct ContentView: View {
                     title: title,
                     bundleID: nil
                 )
-                tabNavigation.openTab(navigationPath: [destination])
+                var filesTabs = tabNavigation.filesTabs
+                filesTabs.openTab(navigationPath: [destination])
+                tabNavigation.setFilesTabs(filesTabs)
                 tabNavigation.select(AppSection.files.rawValue)
             }
         case .admin:
