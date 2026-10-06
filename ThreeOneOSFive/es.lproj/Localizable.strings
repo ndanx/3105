@@ -516,3 +516,26 @@
 "settings.theme_red" = "Rojo";
 "settings.theme_blue" = "Azul";
 "settings.theme_green" = "Verde";
+
+"license.title" = "Activar licencia";
+"license.subtitle" = "Ingresa tu key para usar la app.";
+"license.placeholder" = "Key de licencia";
+"license.activate" = "Activar";
+"license.retry" = "Reintentar";
+"license.checking" = "Verificando licencia…";
+"license.error.offline" = "Sin conexión a internet. Conéctate y vuelve a intentarlo.";
+"license.error.server" = "No se pudo verificar la licencia. Inténtalo de nuevo en unos minutos.";
+"license.error.not_found" = "La key no existe o fue dada de baja.";
+"license.error.suspended" = "Esta key está pausada. Habla con quien te la vendió.";
+"license.error.expired" = "Esta key venció.";
+"license.error.other_device" = "Esta key ya está en uso en otro teléfono.";
+"license.error.invalid" = "La key no es válida (%@).";
+"license.section" = "Licencia";
+"license.expires" = "Vence";
+"license.remaining" = "Tiempo restante";
+"license.remaining_days" = "%lld días";
+"license.remaining_one_day" = "1 día";
+"license.remaining_less" = "Menos de 1 día";
+"license.change_key" = "Cambiar de key";
+"license.change_title" = "¿Cambiar de key?";
+"license.change_message" = "Vas a salir de esta licencia. La key seguirá asociada a este teléfono, así que solo podrás volver a usarla aquí.";

@@ -516,3 +516,26 @@
 "settings.theme_red" = "Red";
 "settings.theme_blue" = "Blue";
 "settings.theme_green" = "Green";
+
+"license.title" = "Activate license";
+"license.subtitle" = "Enter your key to use the app.";
+"license.placeholder" = "License key";
+"license.activate" = "Activate";
+"license.retry" = "Retry";
+"license.checking" = "Checking license…";
+"license.error.offline" = "No internet connection. Connect and try again.";
+"license.error.server" = "The license couldn't be verified. Try again in a few minutes.";
+"license.error.not_found" = "This key doesn't exist or was removed.";
+"license.error.suspended" = "This key is paused. Contact whoever sold it to you.";
+"license.error.expired" = "This key has expired.";
+"license.error.other_device" = "This key is already in use on another phone.";
+"license.error.invalid" = "The key isn't valid (%@).";
+"license.section" = "License";
+"license.expires" = "Expires";
+"license.remaining" = "Time left";
+"license.remaining_days" = "%lld days";
+"license.remaining_one_day" = "1 day";
+"license.remaining_less" = "Less than 1 day";
+"license.change_key" = "Change key";
+"license.change_title" = "Change key?";
+"license.change_message" = "You'll sign out of this license. The key stays tied to this phone, so you'll only be able to use it again here.";

@@ -13,6 +13,7 @@ Modifications to 3105 1.1.1 (GPL-3.0), based on https://github.com/YangJiiii/310
 - GitHub Actions workflow that builds an unsigned IPA.
 - Accent color selector in Settings (orange, red, blue, green).
 - Custom app name ("Injector Dan") and app icon.
+- License screen: the app asks for a license key (Keygen) before it can be used. The key is validated on launch and every time the app returns to the foreground; with no internet, or with a paused, expired or removed key, the app is locked and shows an error. The first phone to use a key is registered and the key won't work on other phones. Settings shows the expiry date and time left, and lets you change the key.
 - Patch rows show the version (with a tag icon) and size; installed patches show their catalog description and an "Open details" button, which is now the only way into the patch details.
 
 ### Removed

@@ -6,6 +6,7 @@ struct ThreeOneOSFiveApp: App {
     @StateObject private var appState = AppState()
     @StateObject private var patchDraftCoordinator = PatchDraftCoordinator()
     @StateObject private var fileOperationCoordinator = FileOperationCoordinator()
+    @StateObject private var license = LicenseManager()
     @AppStorage(AppLanguage.storageKey) private var languageCode = AppLanguage.english.rawValue
     @AppStorage(AppThemeColor.storageKey) private var themeColorCode = AppThemeColor.orange.rawValue
     @State private var showOnboarding = OnboardingStore.shouldShow()
@@ -32,28 +33,29 @@ struct ThreeOneOSFiveApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ContentView()
-                    .environmentObject(appState)
-                    .environmentObject(patchDraftCoordinator)
-                    .environmentObject(fileOperationCoordinator)
-                    .environment(\.appLanguage, language)
-                    .environment(\.locale, language.locale)
-                    .opacity(showOnboarding ? 0 : 1)
-                    .allowsHitTesting(!showOnboarding)
-
                 if showOnboarding {
                     OnboardingView {
                         OnboardingStore.markCompleted()
                         withAnimation(.spring(response: 0.42, dampingFraction: 0.86)) {
                             showOnboarding = false
                         }
-                        appState.detectSupport()
-                        checkForUpdate()
+                        license.revalidate()
                     }
                     .environment(\.appLanguage, language)
                     .environment(\.locale, language.locale)
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
-                    .zIndex(1)
+                } else if license.isUnlocked {
+                    ContentView()
+                        .environmentObject(appState)
+                        .environmentObject(patchDraftCoordinator)
+                        .environmentObject(fileOperationCoordinator)
+                        .environmentObject(license)
+                        .environment(\.appLanguage, language)
+                        .environment(\.locale, language.locale)
+                } else {
+                    LicenseView(license: license)
+                        .environment(\.appLanguage, language)
+                        .environment(\.locale, language.locale)
                 }
             }
             .id(themeColorCode)
@@ -75,13 +77,20 @@ struct ThreeOneOSFiveApp: App {
             }
             .onAppear {
                 if !showOnboarding {
-                    appState.detectSupport()
-                    checkForUpdate()
+                    license.revalidate()
                 }
+            }
+            .onChange(of: license.isUnlocked) { unlocked in
+                guard unlocked, !showOnboarding else { return }
+                appState.detectSupport()
+                checkForUpdate()
             }
             .onChange(of: scenePhase) { phase in
                 guard phase == .active, !showOnboarding else { return }
-                appState.detectSupport()
+                license.revalidate()
+                if license.isUnlocked {
+                    appState.detectSupport()
+                }
             }
             .onOpenURL { url in
                 patchDraftCoordinator.presentImport(url)

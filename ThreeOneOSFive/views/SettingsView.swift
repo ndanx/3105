@@ -4,9 +4,11 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.appLanguage) private var language
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var license: LicenseManager
     @AppStorage(AppLanguage.storageKey) private var languageCode = AppLanguage.english.rawValue
     @AppStorage(AppThemeColor.storageKey) private var themeColorCode = AppThemeColor.orange.rawValue
     @State private var selectedTheme = AppThemeColor.current
+    @State private var showChangeKeyConfirm = false
 
     var body: some View {
         NavigationStack {
@@ -23,6 +25,18 @@ struct SettingsView: View {
                         }
                     }
                     .padding(.vertical, 4)
+                }
+
+                Section {
+                    LabeledContent(language.text("license.expires"), value: expiryText)
+                    LabeledContent(language.text("license.remaining"), value: remainingText)
+                    Button(role: .destructive) {
+                        showChangeKeyConfirm = true
+                    } label: {
+                        Text(language.text("license.change_key"))
+                    }
+                } header: {
+                    Text(language.text("license.section"))
                 }
 
                 Section(language.text("settings.language")) {
@@ -110,6 +124,14 @@ struct SettingsView: View {
                 }
             }
             .tint(selectedTheme.color)
+            .alert(language.text("license.change_title"), isPresented: $showChangeKeyConfirm) {
+                Button(language.text("license.change_key"), role: .destructive) {
+                    license.signOut()
+                }
+                Button(language.text("common.cancel"), role: .cancel) {}
+            } message: {
+                Text(language.text("license.change_message"))
+            }
             .onDisappear {
                 if themeColorCode != selectedTheme.rawValue {
                     themeColorCode = selectedTheme.rawValue
@@ -124,6 +146,24 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    private var expiryText: String {
+        guard let expiry = license.expiry else { return "—" }
+        let formatter = DateFormatter()
+        formatter.locale = language.locale
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: expiry)
+    }
+
+    private var remainingText: String {
+        guard let expiry = license.expiry else { return "—" }
+        let seconds = expiry.timeIntervalSinceNow
+        let days = Int(seconds / 86_400)
+        if seconds <= 0 || days < 1 { return language.text("license.remaining_less") }
+        if days == 1 { return language.text("license.remaining_one_day") }
+        return language.text("license.remaining_days", Int64(days))
     }
 
     private var appVersion: String {
