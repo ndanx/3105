@@ -1,0 +1,7 @@
+{
+  "name": "3105-license-admin-api",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

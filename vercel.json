@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/licenses.ts": {
+      "maxDuration": 10
+    }
+  }
+}

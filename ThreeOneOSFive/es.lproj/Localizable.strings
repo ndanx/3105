@@ -81,8 +81,8 @@
 "tab.admin" = "Licencias";
 "admin.title" = "Administrar licencias";
 "admin.access" = "Acceso de administrador";
-"admin.token" = "Token administrador";
-"admin.token_footer" = "El token se usa solo durante esta sesión y nunca se guarda en la app ni en el código fuente.";
+"admin.token" = "Código de acceso de la app";
+"admin.token_footer" = "Es el código de acceso de tu servidor privado. El token administrador de Keygen nunca se usa dentro de la app.";
 "admin.connect" = "Conectar";
 "admin.disconnect" = "Borrar token";
 "admin.licenses" = "Licencias";

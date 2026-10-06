@@ -16,15 +16,18 @@ enum AdminLicenseError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidToken: return "El token administrador no es válido o no tiene permisos suficientes."
+        case .invalidToken: return "El código de acceso no es válido."
         case .invalidConfiguration: return "Falta configurar la política de licencias."
-        case .requestFailed(let status): return "Keygen respondió con el código \(status)."
-        case .malformedResponse: return "Keygen devolvió una respuesta inesperada."
+        case .requestFailed(let status): return "El servidor respondió con el código \(status)."
+        case .malformedResponse: return "El servidor devolvió una respuesta inesperada."
         }
     }
 }
 
 enum AdminLicenseClient {
+    // Replace this with the deployed Vercel function URL. This is not a Keygen URL.
+    private static let apiURL = "https://REPLACE-WITH-YOUR-VERCEL-PROJECT.vercel.app/api/licenses"
+
     private static let session: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = 15
@@ -36,7 +39,7 @@ enum AdminLicenseClient {
     private static let dateFormatter = ISO8601DateFormatter()
 
     static func list(token: String) async throws -> [AdminLicense] {
-        let data = try await request(path: "/licenses", method: "GET", token: token)
+        let data = try await request(method: "GET", token: token)
         return parseMany(data)
     }
 
@@ -44,47 +47,32 @@ enum AdminLicenseClient {
         guard !policyID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw AdminLicenseError.invalidConfiguration
         }
-        let relationships: [String: Any] = [
-            "policy": ["data": ["type": "policies", "id": policyID]]
-        ]
         let trimmedName = name?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        var attributes: [String: Any] = [:]
-        if !trimmedName.isEmpty { attributes["name"] = trimmedName }
-        let body: [String: Any] = [
-            "data": [
-                "type": "licenses",
-                "attributes": attributes,
-                "relationships": relationships
-            ]
-        ]
-        let data = try await request(path: "/licenses", method: "POST", token: token, body: body)
+        var proxyBody: [String: Any] = ["action": "create", "policyID": policyID]
+        if !trimmedName.isEmpty { proxyBody["name"] = trimmedName }
+        let data = try await request(method: "POST", token: token, body: proxyBody)
         guard let result = parseOne(data) else { throw AdminLicenseError.malformedResponse }
         return result
     }
 
     static func suspend(id: String, token: String) async throws {
-        _ = try await request(path: "/licenses/\(safeID(id))/actions/suspend", method: "POST", token: token)
+        _ = try await request(method: "POST", token: token, body: ["action": "suspend", "id": id])
     }
 
     static func reinstate(id: String, token: String) async throws {
-        _ = try await request(path: "/licenses/\(safeID(id))/actions/reinstate", method: "POST", token: token)
+        _ = try await request(method: "POST", token: token, body: ["action": "reinstate", "id": id])
     }
 
     static func revoke(id: String, token: String) async throws {
-        _ = try await request(path: "/licenses/\(safeID(id))/actions/revoke", method: "DELETE", token: token)
-    }
-
-    private static func safeID(_ id: String) -> String {
-        id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id
+        _ = try await request(method: "DELETE", token: token, body: ["id": id])
     }
 
     private static func request(
-        path: String,
         method: String,
         token: String,
         body: [String: Any]? = nil
     ) async throws -> Data {
-        guard let url = URL(string: LicenseConfig.baseURL + path) else {
+        guard let url = URL(string: apiURL), !apiURL.contains("REPLACE-WITH-YOUR") else {
             throw AdminLicenseError.invalidConfiguration
         }
         var request = URLRequest(url: url)

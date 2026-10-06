@@ -7,6 +7,7 @@
 - Stored patch packages and editable workspaces in `Documents/Patches` so they are visible in the iOS Files app.
 - Added a license administration tab with session-only admin-token entry, license creation, suspension, reinstatement, and revocation.
 - Admin tokens are not embedded in source code and are not persisted by the app.
+- Added a Vercel proxy API so the Keygen administrator token stays server-side.
 
 All notable user-facing changes are documented in this file.
 
