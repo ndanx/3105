@@ -13,7 +13,7 @@ enum LicenseConfig {
 
 // MARK: - Failures
 
-enum LicenseFailure: Equatable {
+enum LicenseFailure: Error, Equatable {
     case offline
     case server
     case notFound
