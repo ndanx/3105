@@ -52,7 +52,9 @@ struct FeatureVisibility: Equatable {
             return wallpapersEnabled && wallpapersSupported
         case .files:
             return true
-        case .home, .patches, .admin:
+        case .admin:
+            return false
+        case .home, .patches:
             return true
         }
     }
