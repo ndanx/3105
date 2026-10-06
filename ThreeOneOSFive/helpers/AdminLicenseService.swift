@@ -33,11 +33,7 @@ enum AdminLicenseClient {
         return URLSession(configuration: configuration)
     }()
 
-    private static let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
+    private static let dateFormatter = ISO8601DateFormatter()
 
     static func list(token: String) async throws -> [AdminLicense] {
         let data = try await request(path: "/licenses", method: "GET", token: token)
@@ -48,7 +44,7 @@ enum AdminLicenseClient {
         guard !policyID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw AdminLicenseError.invalidConfiguration
         }
-        var relationships: [String: Any] = [
+        let relationships: [String: Any] = [
             "policy": ["data": ["type": "policies", "id": policyID]]
         ]
         let trimmedName = name?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -125,7 +121,7 @@ enum AdminLicenseClient {
               let attributes = value["attributes"] as? [String: Any] else { return nil }
         let expiry: Date?
         if let raw = attributes["expiry"] as? String {
-            expiry = try? decoder.date(from: raw)
+            expiry = dateFormatter.date(from: raw)
         } else {
             expiry = nil
         }
