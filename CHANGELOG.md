@@ -12,6 +12,7 @@ Modifications to 3105 1.1.1 (GPL-3.0), based on https://github.com/YangJiiii/310
 - Spanish localization.
 - GitHub Actions workflow that builds an unsigned IPA.
 - Accent color selector in Settings (orange, red, blue, green).
+- Custom app name ("Injector Dan") and app icon.
 - Patch rows show the version (with a tag icon) and size; installed patches show their catalog description and an "Open details" button, which is now the only way into the patch details.
 
 ### Removed
